@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paint Visualizer</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🎨 Paint Visualizer</h1>
+        <p>Upload a photo and try new paint colors</p>
+      </div>
+
+      <div class="content">
+        <div class="sidebar">
+          <div class="section">
+            <h3>1. Upload Image</h3>
+            <div class="upload-area" id="uploadArea">
+              <div class="upload-icon">📁</div>
+              <p>Click or drag & drop</p>
+              <input type="file" id="fileInput" accept="image/*" />
+            </div>
+            <button
+              class="btn btn-danger"
+              id="resetImageBtn"
+              disabled
+              style="margin-top: 10px"
+            >
+              Reset Image
+            </button>
+          </div>
+
+          <div class="section">
+            <h3>2. Select Area</h3>
+            <div class="tool-group">
+              <button class="tool-btn" id="polygonBtn" disabled>
+                📍 Polygon Select
+              </button>
+              <button class="tool-btn" id="addBtn" disabled>
+                ✏️ Add with Brush
+              </button>
+              <button class="tool-btn" id="eraseBtn" disabled>
+                ➖ Erase with Brush
+              </button>
+            </div>
+
+            <div class="vertex-info" id="vertexInfo" style="display: none">
+              <strong>Polygon Mode:</strong> Tap to add points. Double-tap last
+              point to complete.
+            </div>
+
+            <div id="brushTools" style="display: none">
+              <div class="slider-group">
+                <label
+                  ><span>Brush Size</span><span id="brushValue">20</span></label
+                >
+                <input
+                  type="range"
+                  id="brushSize"
+                  min="5"
+                  max="100"
+                  value="20"
+                />
+              </div>
+            </div>
+            <div
+              class="tool-group"
+              style="margin-top: 15px; flex-direction: column; gap: 10px"
+            >
+              <button class="btn btn-secondary" id="clearBtn" disabled>
+                Clear Selection
+              </button>
+              <button class="btn btn-secondary" id="clearPaintBtn" disabled>
+                Clear Paint
+              </button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>3. Choose Paint</h3>
+            <div class="color-picker-group">
+              <div class="color-input-wrapper">
+                <input type="color" id="colorPicker" value="#A8D8EA" />
+                <input
+                  type="text"
+                  class="color-value"
+                  id="colorValue"
+                  value="#A8D8EA"
+                />
+              </div>
+              <div class="preset-colors">
+                <div
+                  class="preset-color"
+                  style="background: #e8d5c4"
+                  data-color="#E8D5C4"
+                ></div>
+                <div
+                  class="preset-color selected"
+                  style="background: #a8d8ea"
+                  data-color="#A8D8EA"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #f4e4ba"
+                  data-color="#F4E4BA"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #c9b8d4"
+                  data-color="#C9B8D4"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #b8d4c9"
+                  data-color="#B8D4C9"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #f5b7b1"
+                  data-color="#F5B7B1"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #85929e"
+                  data-color="#85929E"
+                ></div>
+                <div
+                  class="preset-color"
+                  style="background: #f9e79f"
+                  data-color="#F9E79F"
+                ></div>
+              </div>
+            </div>
+            <button
+              class="btn btn-primary"
+              id="applyBtn"
+              disabled
+              style="margin-top: 15px"
+            >
+              Apply Paint
+            </button>
+          </div>
+
+          <div class="section">
+            <h3>4. Save Result</h3>
+            <button class="btn btn-success" id="saveBtn" disabled>
+              Download Image
+            </button>
+          </div>
+        </div>
+
+        <div class="canvas-area" id="canvasArea">
+          <div class="placeholder" id="placeholder">
+            <div class="placeholder-icon">🏠</div>
+            <h2>Upload a photo to start</h2>
+          </div>
+          <div id="canvasContainer">
+            <canvas id="mainCanvas"></canvas>
+            <canvas id="overlayCanvas"></canvas>
+            <div class="brush-cursor" id="brushCursor"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
