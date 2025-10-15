@@ -15,21 +15,13 @@
 
       <div class="content">
         <div class="sidebar">
-          <div class="section">
+          <div class="section" id="uploadSection">
             <h3>1. Upload Image</h3>
             <div class="upload-area" id="uploadArea">
               <div class="upload-icon">📁</div>
               <p>Click or drag & drop</p>
               <input type="file" id="fileInput" accept="image/*" />
             </div>
-            <button
-              class="btn btn-danger"
-              id="resetImageBtn"
-              disabled
-              style="margin-top: 10px"
-            >
-              Reset Image
-            </button>
           </div>
 
           <div class="section">
@@ -74,6 +66,9 @@
               </button>
               <button class="btn btn-secondary" id="clearPaintBtn" disabled>
                 Clear Paint
+              </button>
+              <button class="btn btn-danger" id="resetImageBtn" disabled>
+                Reset Image
               </button>
             </div>
           </div>
