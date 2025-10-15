@@ -63,7 +63,8 @@ body {
 
 .content {
   display: flex;
-  flex-direction: column; /* Mobile first layout */
+  /* UPDATED: This moves the canvas to the top on mobile */
+  flex-direction: column-reverse;
   gap: 20px;
   padding: 15px;
 }
@@ -388,6 +389,7 @@ input[type="range"]::-moz-range-thumb {
   }
 
   .content {
+    /* Revert to row layout for desktop */
     flex-direction: row;
     padding: 20px;
   }

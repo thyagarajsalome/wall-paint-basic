@@ -14,6 +14,8 @@ const brushSize = document.getElementById("brushSize");
 const brushValue = document.getElementById("brushValue");
 const vertexInfo = document.getElementById("vertexInfo");
 const brushTools = document.getElementById("brushTools");
+// ADDED: A reference to the upload section to hide it
+const uploadSection = document.getElementById("uploadSection");
 
 let originalImage = null;
 let currentImage = null;
@@ -78,6 +80,8 @@ function loadImage(file) {
       placeholder.style.display = "none";
       canvasContainer.style.display = "block";
       enableTools();
+      // ADDED: Hide the upload section to save space
+      uploadSection.style.display = "none";
     };
     img.src = e.target.result;
   };
@@ -328,7 +332,7 @@ clearPaintBtn.addEventListener("click", () => {
   revertToOriginal();
 });
 
-// âœ¨ --- APPLY PAINT WITH ACCURATE COLOR MATCHING --- âœ¨
+// ✨ --- APPLY PAINT WITH ACCURATE COLOR MATCHING --- ✨
 applyBtn.addEventListener("click", () => {
   const targetColor = hexToRgb(colorPicker.value);
   const targetHsl = rgbToHsl(targetColor.r, targetColor.g, targetColor.b);
