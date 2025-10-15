@@ -27,7 +27,7 @@ const polygonBtn = document.getElementById("polygonBtn");
 const addBtn = document.getElementById("addBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const clearBtn = document.getElementById("clearBtn");
-const clearPaintBtn = document.getElementById("clearPaintBtn"); // New button
+const clearPaintBtn = document.getElementById("clearPaintBtn");
 const applyBtn = document.getElementById("applyBtn");
 const saveBtn = document.getElementById("saveBtn");
 const resetImageBtn = document.getElementById("resetImageBtn");
@@ -90,7 +90,7 @@ function enableTools() {
     addBtn,
     eraseBtn,
     clearBtn,
-    clearPaintBtn, // Enable new button
+    clearPaintBtn,
     applyBtn,
     saveBtn,
     resetImageBtn,
@@ -328,6 +328,7 @@ clearPaintBtn.addEventListener("click", () => {
   revertToOriginal();
 });
 
+// âœ¨ --- APPLY PAINT WITH ACCURATE COLOR MATCHING --- âœ¨
 applyBtn.addEventListener("click", () => {
   const targetColor = hexToRgb(colorPicker.value);
   const targetHsl = rgbToHsl(targetColor.r, targetColor.g, targetColor.b);
@@ -341,15 +342,25 @@ applyBtn.addEventListener("click", () => {
   for (let i = 0; i < selectionMask.length; i++) {
     if (selectionMask[i] === 1) {
       const idx = i * 4;
+
+      // Get original pixel colors
       const originalR = currentImage.data[idx];
       const originalG = currentImage.data[idx + 1];
       const originalB = currentImage.data[idx + 2];
 
+      // Convert original color to HSL to preserve lightness
       const originalHsl = rgbToHsl(originalR, originalG, originalB);
 
-      // Create new color with target hue/saturation but original lightness
-      const newRgb = hslToRgb(targetHsl[0], targetHsl[1], originalHsl[2]);
+      // Use the target color's Hue and Saturation, but preserve original Lightness
+      // Apply a subtle saturation adjustment to maintain texture
+      const newH = targetHsl[0];
+      const newS = targetHsl[1] * 0.85; // Slightly reduce saturation for more natural look
+      const newL = originalHsl[2]; // Preserve original lightness for texture
 
+      // Convert back to RGB
+      const newRgb = hslToRgb(newH, newS, newL);
+
+      // Update image data
       newImageData.data[idx] = newRgb[0];
       newImageData.data[idx + 1] = newRgb[1];
       newImageData.data[idx + 2] = newRgb[2];
@@ -408,10 +419,7 @@ function hexToRgb(hex) {
 }
 
 /**
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and l in the set [0, 1].
+ * Converts an RGB color value to HSL.
  */
 function rgbToHsl(r, g, b) {
   (r /= 255), (g /= 255), (b /= 255);
@@ -443,10 +451,7 @@ function rgbToHsl(r, g, b) {
 }
 
 /**
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
+ * Converts an HSL color value to RGB.
  */
 function hslToRgb(h, s, l) {
   let r, g, b;
